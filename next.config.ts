@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
-const supabaseHost = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL!).hostname;
+// Locally these come from .env.local (not in git). On the host they must be set as environment
+// variables — see .env.example.
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+if (!supabaseUrl) {
+  throw new Error(
+    "NEXT_PUBLIC_SUPABASE_URL mangler. Tilføj den (og de andre variabler i .env.example) " +
+      "som environment variables hos din hosting, fx Vercel → Settings → Environment Variables.",
+  );
+}
+const supabaseHost = new URL(supabaseUrl).hostname;
 
 const nextConfig: NextConfig = {
   images: {
